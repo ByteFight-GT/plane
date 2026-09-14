@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Sincronizzazione dei gruppi",
+        "description": "Associa i gruppi del provider di identità ai ruoli dello spazio di lavoro e dei progetti. I membri vengono aggiunti, aggiornati o rimossi automaticamente quando accedono tramite SSO.",
+        "settings": {
+          "title": "Impostazioni di sincronizzazione",
+          "sync_on_login": {
+            "label": "Sincronizza all'accesso",
+            "description": "Aggiorna l'accesso del membro a ogni accesso tramite SSO."
+          },
+          "offline_sync": {
+            "label": "Sincronizzazione offline",
+            "description": "Aggiorna l'accesso ogni due ore in background utilizzando i token di aggiornamento memorizzati. Richiede l'attivazione dell'accesso offline nelle impostazioni di OpenID Connect."
+          },
+          "auto_remove": {
+            "label": "Rimozione automatica",
+            "description": "Revoca l'accesso concesso tramite un'associazione di gruppo quando il membro lascia il gruppo. L'accesso concesso manualmente non viene mai rimosso."
+          },
+          "group_attribute_key": {
+            "label": "Chiave dell'attributo gruppo",
+            "description": "Il claim che contiene l'elenco dei gruppi, ad esempio groups, roles, memberOf o realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Ruolo predefinito dello spazio di lavoro",
+            "description": "Ruolo dello spazio di lavoro per i membri aggiunti tramite un'associazione di progetto priva di associazione di ruolo dello spazio di lavoro.",
+            "none": "Ospite (predefinito)"
+          },
+          "sync_now": "Sincronizza ora",
+          "sync_queued": "Sincronizzazione avviata. I membri verranno aggiornati a breve.",
+          "last_synced": "Ultima sincronizzazione offline",
+          "never_synced": "La sincronizzazione offline non è ancora stata eseguita."
+        },
+        "workspace_mappings": {
+          "title": "Associazioni dei ruoli dello spazio di lavoro",
+          "description": "I membri di questi gruppi vengono aggiunti allo spazio di lavoro con il ruolo indicato di seguito.",
+          "empty": "Nessuna associazione di ruolo dello spazio di lavoro presente."
+        },
+        "project_mappings": {
+          "title": "Associazioni dei ruoli di progetto",
+          "description": "I membri di questi gruppi vengono aggiunti al progetto selezionato con il ruolo indicato di seguito.",
+          "empty": "Nessuna associazione di ruolo di progetto presente.",
+          "all_projects": "Tutti i progetti"
+        },
+        "fields": {
+          "group": "Nome del gruppo",
+          "group_placeholder": "es. plane-admins",
+          "role": "Ruolo",
+          "project": "Progetto"
+        },
+        "actions": {
+          "add": "Aggiungi associazione",
+          "remove": "Rimuovi"
+        },
+        "toasts": {
+          "saved": "Impostazioni salvate.",
+          "save_failed": "Impossibile salvare le impostazioni. Riprovare.",
+          "mapping_added": "Associazione aggiunta.",
+          "mapping_removed": "Associazione rimossa.",
+          "mapping_failed": "Impossibile salvare l'associazione. Riprovare."
+        }
+      },
       "webhooks": {
         "heading": "Webhook",
         "description": "Automatizza le notifiche verso servizi esterni quando si verificano eventi del progetto.",

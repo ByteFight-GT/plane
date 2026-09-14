@@ -226,6 +226,13 @@ from .notification.base import (
 from .exporter.base import ExportIssuesEndpoint
 
 
+from .workspace.group_sync import (
+    WorkspaceGroupSyncConfigEndpoint,
+    WorkspaceGroupSyncRunEndpoint,
+    WorkspaceGroupRoleMappingEndpoint,
+    ProjectGroupRoleMappingEndpoint,
+)
+
 from .webhook.base import (
     WebhookEndpoint,
     WebhookLogsEndpoint,

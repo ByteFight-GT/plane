@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Gruppensynchronisierung",
+        "description": "Ordnen Sie Gruppen Ihres Identitätsanbieters Workspace- und Projektrollen zu. Mitglieder werden automatisch hinzugefügt, aktualisiert oder entfernt, wenn sie sich per SSO anmelden.",
+        "settings": {
+          "title": "Synchronisierungseinstellungen",
+          "sync_on_login": {
+            "label": "Bei Anmeldung synchronisieren",
+            "description": "Aktualisiert den Zugriff des Mitglieds bei jeder Anmeldung per SSO."
+          },
+          "offline_sync": {
+            "label": "Offline-Synchronisierung",
+            "description": "Aktualisiert den Zugriff alle zwei Stunden im Hintergrund mithilfe gespeicherter Aktualisierungstoken. Erfordert aktivierten Offline-Zugriff in den OpenID Connect-Einstellungen."
+          },
+          "auto_remove": {
+            "label": "Automatisch entfernen",
+            "description": "Entzieht den über eine Gruppenzuordnung gewährten Zugriff, wenn das Mitglied die Gruppe verlässt. Manuell gewährter Zugriff wird nie entfernt."
+          },
+          "group_attribute_key": {
+            "label": "Gruppenattributschlüssel",
+            "description": "Der Claim, der die Gruppenliste enthält, zum Beispiel groups, roles, memberOf oder realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Standard-Workspace-Rolle",
+            "description": "Workspace-Rolle für Mitglieder, die über eine Projektzuordnung ohne Workspace-Rollenzuordnung hinzugefügt werden.",
+            "none": "Gast (Standard)"
+          },
+          "sync_now": "Jetzt synchronisieren",
+          "sync_queued": "Synchronisierung gestartet. Die Mitglieder werden in Kürze aktualisiert.",
+          "last_synced": "Letzte Offline-Synchronisierung",
+          "never_synced": "Die Offline-Synchronisierung wurde noch nicht ausgeführt."
+        },
+        "workspace_mappings": {
+          "title": "Workspace-Rollenzuordnungen",
+          "description": "Mitglieder dieser Gruppen werden dem Workspace mit der unten stehenden Rolle hinzugefügt.",
+          "empty": "Noch keine Workspace-Rollenzuordnungen vorhanden."
+        },
+        "project_mappings": {
+          "title": "Projektrollenzuordnungen",
+          "description": "Mitglieder dieser Gruppen werden dem ausgewählten Projekt mit der unten stehenden Rolle hinzugefügt.",
+          "empty": "Noch keine Projektrollenzuordnungen vorhanden.",
+          "all_projects": "Alle Projekte"
+        },
+        "fields": {
+          "group": "Gruppenname",
+          "group_placeholder": "z. B. plane-admins",
+          "role": "Rolle",
+          "project": "Projekt"
+        },
+        "actions": {
+          "add": "Zuordnung hinzufügen",
+          "remove": "Entfernen"
+        },
+        "toasts": {
+          "saved": "Einstellungen gespeichert.",
+          "save_failed": "Einstellungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+          "mapping_added": "Zuordnung hinzugefügt.",
+          "mapping_removed": "Zuordnung entfernt.",
+          "mapping_failed": "Zuordnung konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+        }
+      },
       "webhooks": {
         "heading": "Webhooks",
         "description": "Automatisieren Sie Benachrichtigungen an externe Dienste, wenn Projektereignisse auftreten.",

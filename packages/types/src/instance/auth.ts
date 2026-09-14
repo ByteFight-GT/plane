@@ -64,6 +64,7 @@ export type TInstanceOIDCAuthenticationConfigurationKeys =
   | "OIDC_CLIENT_ID"
   | "OIDC_CLIENT_SECRET"
   | "OIDC_REQUIRE_EMAIL_VERIFIED"
+  | "OIDC_OFFLINE_ACCESS"
   | "ENABLE_OIDC_SYNC";
 
 export type TInstanceAuthenticationConfigurationKeys =

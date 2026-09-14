@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Đồng bộ nhóm",
+        "description": "Ánh xạ các nhóm từ nhà cung cấp danh tính của bạn tới vai trò trong không gian làm việc và dự án. Thành viên được tự động thêm, cập nhật hoặc gỡ bỏ khi họ đăng nhập qua SSO.",
+        "settings": {
+          "title": "Cài đặt đồng bộ",
+          "sync_on_login": {
+            "label": "Đồng bộ khi đăng nhập",
+            "description": "Cập nhật quyền truy cập của thành viên mỗi khi họ đăng nhập qua SSO."
+          },
+          "offline_sync": {
+            "label": "Đồng bộ ngoại tuyến",
+            "description": "Làm mới quyền truy cập hai giờ một lần trong nền bằng các mã thông báo làm mới đã lưu. Yêu cầu bật quyền truy cập ngoại tuyến trong cài đặt OpenID Connect."
+          },
+          "auto_remove": {
+            "label": "Tự động gỡ bỏ",
+            "description": "Thu hồi quyền truy cập được cấp qua ánh xạ nhóm khi thành viên rời khỏi nhóm. Quyền truy cập được cấp thủ công không bao giờ bị gỡ bỏ."
+          },
+          "group_attribute_key": {
+            "label": "Khóa thuộc tính nhóm",
+            "description": "Claim chứa danh sách nhóm, ví dụ groups, roles, memberOf hoặc realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Vai trò mặc định trong không gian làm việc",
+            "description": "Vai trò trong không gian làm việc dành cho thành viên được thêm qua ánh xạ dự án mà không có ánh xạ vai trò không gian làm việc.",
+            "none": "Khách (mặc định)"
+          },
+          "sync_now": "Đồng bộ ngay",
+          "sync_queued": "Đã bắt đầu đồng bộ. Thành viên sẽ sớm được cập nhật.",
+          "last_synced": "Lần đồng bộ ngoại tuyến gần nhất",
+          "never_synced": "Đồng bộ ngoại tuyến chưa được chạy."
+        },
+        "workspace_mappings": {
+          "title": "Ánh xạ vai trò không gian làm việc",
+          "description": "Thành viên của các nhóm này được thêm vào không gian làm việc với vai trò bên dưới.",
+          "empty": "Chưa có ánh xạ vai trò không gian làm việc nào."
+        },
+        "project_mappings": {
+          "title": "Ánh xạ vai trò dự án",
+          "description": "Thành viên của các nhóm này được thêm vào dự án đã chọn với vai trò bên dưới.",
+          "empty": "Chưa có ánh xạ vai trò dự án nào.",
+          "all_projects": "Tất cả dự án"
+        },
+        "fields": {
+          "group": "Tên nhóm",
+          "group_placeholder": "ví dụ: plane-admins",
+          "role": "Vai trò",
+          "project": "Dự án"
+        },
+        "actions": {
+          "add": "Thêm ánh xạ",
+          "remove": "Gỡ bỏ"
+        },
+        "toasts": {
+          "saved": "Đã lưu cài đặt.",
+          "save_failed": "Không thể lưu cài đặt. Vui lòng thử lại.",
+          "mapping_added": "Đã thêm ánh xạ.",
+          "mapping_removed": "Đã gỡ bỏ ánh xạ.",
+          "mapping_failed": "Không thể lưu ánh xạ. Vui lòng thử lại."
+        }
+      },
       "webhooks": {
         "heading": "Webhook",
         "description": "Tự động hóa thông báo đến các dịch vụ bên ngoài khi các sự kiện dự án xảy ra.",

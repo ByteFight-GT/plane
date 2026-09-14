@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Synchronisation des groupes",
+        "description": "Associez les groupes de votre fournisseur d'identité à des rôles d'espace de travail et de projet. Les membres sont ajoutés, mis à jour ou retirés automatiquement lorsqu'ils se connectent via SSO.",
+        "settings": {
+          "title": "Paramètres de synchronisation",
+          "sync_on_login": {
+            "label": "Synchroniser à la connexion",
+            "description": "Met à jour l'accès du membre à chaque connexion via SSO."
+          },
+          "offline_sync": {
+            "label": "Synchronisation hors ligne",
+            "description": "Actualise l'accès toutes les deux heures en arrière-plan à l'aide des jetons d'actualisation enregistrés. Nécessite l'activation de l'accès hors ligne dans les paramètres OpenID Connect."
+          },
+          "auto_remove": {
+            "label": "Retrait automatique",
+            "description": "Révoque l'accès accordé par une association de groupe lorsque le membre quitte le groupe. L'accès accordé manuellement n'est jamais retiré."
+          },
+          "group_attribute_key": {
+            "label": "Clé d'attribut de groupe",
+            "description": "La revendication contenant la liste des groupes, par exemple groups, roles, memberOf ou realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Rôle d'espace de travail par défaut",
+            "description": "Rôle d'espace de travail attribué aux membres ajoutés via une association de projet sans association de rôle d'espace de travail.",
+            "none": "Invité (par défaut)"
+          },
+          "sync_now": "Synchroniser maintenant",
+          "sync_queued": "Synchronisation lancée. Les membres seront mis à jour sous peu.",
+          "last_synced": "Dernière synchronisation hors ligne",
+          "never_synced": "La synchronisation hors ligne n'a pas encore été exécutée."
+        },
+        "workspace_mappings": {
+          "title": "Associations de rôles d'espace de travail",
+          "description": "Les membres de ces groupes sont ajoutés à l'espace de travail avec le rôle ci-dessous.",
+          "empty": "Aucune association de rôle d'espace de travail pour le moment."
+        },
+        "project_mappings": {
+          "title": "Associations de rôles de projet",
+          "description": "Les membres de ces groupes sont ajoutés au projet sélectionné avec le rôle ci-dessous.",
+          "empty": "Aucune association de rôle de projet pour le moment.",
+          "all_projects": "Tous les projets"
+        },
+        "fields": {
+          "group": "Nom du groupe",
+          "group_placeholder": "p. ex. plane-admins",
+          "role": "Rôle",
+          "project": "Projet"
+        },
+        "actions": {
+          "add": "Ajouter une association",
+          "remove": "Retirer"
+        },
+        "toasts": {
+          "saved": "Paramètres enregistrés.",
+          "save_failed": "Impossible d'enregistrer les paramètres. Veuillez réessayer.",
+          "mapping_added": "Association ajoutée.",
+          "mapping_removed": "Association retirée.",
+          "mapping_failed": "Impossible d'enregistrer l'association. Veuillez réessayer."
+        }
+      },
       "webhooks": {
         "heading": "Webhooks",
         "description": "Automatisez les notifications vers des services externes lors d’événements du projet.",

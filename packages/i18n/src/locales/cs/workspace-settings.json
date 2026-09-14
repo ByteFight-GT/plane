@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Synchronizace skupin",
+        "description": "Přiřaďte skupiny z vašeho poskytovatele identity k rolím v pracovním prostoru a projektech. Členové jsou automaticky přidáváni, aktualizováni nebo odebíráni při přihlášení přes SSO.",
+        "settings": {
+          "title": "Nastavení synchronizace",
+          "sync_on_login": {
+            "label": "Synchronizovat při přihlášení",
+            "description": "Aktualizuje přístup člena při každém přihlášení přes SSO."
+          },
+          "offline_sync": {
+            "label": "Offline synchronizace",
+            "description": "Obnovuje přístup každé dvě hodiny na pozadí pomocí uložených obnovovacích tokenů. Vyžaduje povolení offline přístupu v nastavení OpenID Connect."
+          },
+          "auto_remove": {
+            "label": "Automatické odebrání",
+            "description": "Odebere přístup udělený přiřazením skupiny, jakmile člen skupinu opustí. Ručně udělený přístup se nikdy neodebírá."
+          },
+          "group_attribute_key": {
+            "label": "Klíč atributu skupiny",
+            "description": "Nárok obsahující seznam skupin, například groups, roles, memberOf nebo realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Výchozí role v pracovním prostoru",
+            "description": "Role v pracovním prostoru pro členy přidané prostřednictvím přiřazení projektu, které nemá přiřazení role v pracovním prostoru.",
+            "none": "Host (výchozí)"
+          },
+          "sync_now": "Synchronizovat nyní",
+          "sync_queued": "Synchronizace byla zahájena. Členové budou brzy aktualizováni.",
+          "last_synced": "Poslední offline synchronizace",
+          "never_synced": "Offline synchronizace zatím neproběhla."
+        },
+        "workspace_mappings": {
+          "title": "Přiřazení rolí v pracovním prostoru",
+          "description": "Členové těchto skupin jsou přidáni do pracovního prostoru s níže uvedenou rolí.",
+          "empty": "Zatím žádná přiřazení rolí v pracovním prostoru."
+        },
+        "project_mappings": {
+          "title": "Přiřazení rolí v projektech",
+          "description": "Členové těchto skupin jsou přidáni do vybraného projektu s níže uvedenou rolí.",
+          "empty": "Zatím žádná přiřazení rolí v projektech.",
+          "all_projects": "Všechny projekty"
+        },
+        "fields": {
+          "group": "Název skupiny",
+          "group_placeholder": "např. plane-admins",
+          "role": "Role",
+          "project": "Projekt"
+        },
+        "actions": {
+          "add": "Přidat přiřazení",
+          "remove": "Odebrat"
+        },
+        "toasts": {
+          "saved": "Nastavení uložena.",
+          "save_failed": "Nastavení se nepodařilo uložit. Zkuste to prosím znovu.",
+          "mapping_added": "Přiřazení přidáno.",
+          "mapping_removed": "Přiřazení odebráno.",
+          "mapping_failed": "Přiřazení se nepodařilo uložit. Zkuste to prosím znovu."
+        }
+      },
       "webhooks": {
         "heading": "Webhooky",
         "description": "Automatizujte oznámení externím službám při výskytu událostí projektu.",

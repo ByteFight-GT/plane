@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Sincronización de grupos",
+        "description": "Asigne los grupos de su proveedor de identidad a roles de espacio de trabajo y de proyecto. Los miembros se añaden, actualizan o eliminan automáticamente cuando inician sesión mediante SSO.",
+        "settings": {
+          "title": "Configuración de sincronización",
+          "sync_on_login": {
+            "label": "Sincronizar al iniciar sesión",
+            "description": "Actualiza el acceso del miembro cada vez que inicia sesión mediante SSO."
+          },
+          "offline_sync": {
+            "label": "Sincronización sin conexión",
+            "description": "Actualiza el acceso cada dos horas en segundo plano usando los tokens de actualización almacenados. Requiere que el acceso sin conexión esté habilitado en la configuración de OpenID Connect."
+          },
+          "auto_remove": {
+            "label": "Eliminación automática",
+            "description": "Revoca el acceso concedido por una asignación de grupo cuando el miembro abandona el grupo. El acceso concedido manualmente nunca se elimina."
+          },
+          "group_attribute_key": {
+            "label": "Clave del atributo de grupo",
+            "description": "La reclamación que contiene la lista de grupos, por ejemplo groups, roles, memberOf o realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Rol predeterminado del espacio de trabajo",
+            "description": "Rol de espacio de trabajo para los miembros añadidos mediante una asignación de proyecto que no tienen asignación de rol de espacio de trabajo.",
+            "none": "Invitado (predeterminado)"
+          },
+          "sync_now": "Sincronizar ahora",
+          "sync_queued": "Sincronización iniciada. Los miembros se actualizarán en breve.",
+          "last_synced": "Última sincronización sin conexión",
+          "never_synced": "La sincronización sin conexión aún no se ha ejecutado."
+        },
+        "workspace_mappings": {
+          "title": "Asignaciones de roles del espacio de trabajo",
+          "description": "Los miembros de estos grupos se añaden al espacio de trabajo con el rol indicado a continuación.",
+          "empty": "Aún no hay asignaciones de roles del espacio de trabajo."
+        },
+        "project_mappings": {
+          "title": "Asignaciones de roles de proyecto",
+          "description": "Los miembros de estos grupos se añaden al proyecto seleccionado con el rol indicado a continuación.",
+          "empty": "Aún no hay asignaciones de roles de proyecto.",
+          "all_projects": "Todos los proyectos"
+        },
+        "fields": {
+          "group": "Nombre del grupo",
+          "group_placeholder": "p. ej. plane-admins",
+          "role": "Rol",
+          "project": "Proyecto"
+        },
+        "actions": {
+          "add": "Añadir asignación",
+          "remove": "Eliminar"
+        },
+        "toasts": {
+          "saved": "Configuración guardada.",
+          "save_failed": "No se pudo guardar la configuración. Inténtelo de nuevo.",
+          "mapping_added": "Asignación añadida.",
+          "mapping_removed": "Asignación eliminada.",
+          "mapping_failed": "No se pudo guardar la asignación. Inténtelo de nuevo."
+        }
+      },
       "webhooks": {
         "heading": "Webhooks",
         "description": "Automatiza las notificaciones a servicios externos cuando ocurren eventos del proyecto.",

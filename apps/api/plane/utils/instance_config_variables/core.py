@@ -200,6 +200,12 @@ oidc_config_variables = [
         "is_encrypted": False,
     },
     {
+        "key": "OIDC_OFFLINE_ACCESS",
+        "value": os.environ.get("OIDC_OFFLINE_ACCESS", "0"),
+        "category": "OIDC",
+        "is_encrypted": False,
+    },
+    {
         "key": "ENABLE_OIDC_SYNC",
         "value": os.environ.get("ENABLE_OIDC_SYNC", "0"),
         "category": "OIDC",

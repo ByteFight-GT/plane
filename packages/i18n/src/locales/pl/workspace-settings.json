@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Synchronizacja grup",
+        "description": "Przypisz grupy z dostawcy tożsamości do ról w przestrzeni roboczej i projektach. Członkowie są automatycznie dodawani, aktualizowani lub usuwani podczas logowania przez SSO.",
+        "settings": {
+          "title": "Ustawienia synchronizacji",
+          "sync_on_login": {
+            "label": "Synchronizuj przy logowaniu",
+            "description": "Aktualizuje dostęp członka przy każdym logowaniu przez SSO."
+          },
+          "offline_sync": {
+            "label": "Synchronizacja offline",
+            "description": "Odświeża dostęp co dwie godziny w tle, korzystając z zapisanych tokenów odświeżania. Wymaga włączenia dostępu offline w ustawieniach OpenID Connect."
+          },
+          "auto_remove": {
+            "label": "Automatyczne usuwanie",
+            "description": "Odbiera dostęp przyznany przez przypisanie grupy, gdy członek opuści grupę. Dostęp przyznany ręcznie nigdy nie jest usuwany."
+          },
+          "group_attribute_key": {
+            "label": "Klucz atrybutu grupy",
+            "description": "Roszczenie zawierające listę grup, na przykład groups, roles, memberOf lub realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Domyślna rola w przestrzeni roboczej",
+            "description": "Rola w przestrzeni roboczej dla członków dodanych przez przypisanie projektu, które nie ma przypisania roli w przestrzeni roboczej.",
+            "none": "Gość (domyślnie)"
+          },
+          "sync_now": "Synchronizuj teraz",
+          "sync_queued": "Synchronizacja rozpoczęta. Członkowie zostaną wkrótce zaktualizowani.",
+          "last_synced": "Ostatnia synchronizacja offline",
+          "never_synced": "Synchronizacja offline nie została jeszcze uruchomiona."
+        },
+        "workspace_mappings": {
+          "title": "Przypisania ról w przestrzeni roboczej",
+          "description": "Członkowie tych grup są dodawani do przestrzeni roboczej z poniższą rolą.",
+          "empty": "Brak przypisań ról w przestrzeni roboczej."
+        },
+        "project_mappings": {
+          "title": "Przypisania ról w projektach",
+          "description": "Członkowie tych grup są dodawani do wybranego projektu z poniższą rolą.",
+          "empty": "Brak przypisań ról w projektach.",
+          "all_projects": "Wszystkie projekty"
+        },
+        "fields": {
+          "group": "Nazwa grupy",
+          "group_placeholder": "np. plane-admins",
+          "role": "Rola",
+          "project": "Projekt"
+        },
+        "actions": {
+          "add": "Dodaj przypisanie",
+          "remove": "Usuń"
+        },
+        "toasts": {
+          "saved": "Ustawienia zapisane.",
+          "save_failed": "Nie udało się zapisać ustawień. Spróbuj ponownie.",
+          "mapping_added": "Przypisanie dodane.",
+          "mapping_removed": "Przypisanie usunięte.",
+          "mapping_failed": "Nie udało się zapisać przypisania. Spróbuj ponownie."
+        }
+      },
       "webhooks": {
         "heading": "Webhooki",
         "description": "Automatyzuj powiadomienia do usług zewnętrznych, gdy wystąpią zdarzenia projektowe.",

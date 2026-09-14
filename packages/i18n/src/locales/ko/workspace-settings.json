@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "그룹 동기화",
+        "description": "ID 공급자의 그룹을 워크스페이스 및 프로젝트 역할에 매핑합니다. 구성원이 SSO로 로그인하면 자동으로 추가, 업데이트 또는 제거됩니다.",
+        "settings": {
+          "title": "동기화 설정",
+          "sync_on_login": {
+            "label": "로그인 시 동기화",
+            "description": "구성원이 SSO로 로그인할 때마다 액세스 권한을 업데이트합니다."
+          },
+          "offline_sync": {
+            "label": "오프라인 동기화",
+            "description": "저장된 새로 고침 토큰을 사용하여 백그라운드에서 2시간마다 액세스 권한을 새로 고칩니다. OpenID Connect 설정에서 오프라인 액세스를 활성화해야 합니다."
+          },
+          "auto_remove": {
+            "label": "자동 제거",
+            "description": "구성원이 그룹에서 나가면 그룹 매핑으로 부여된 액세스 권한을 취소합니다. 수동으로 부여된 액세스 권한은 제거되지 않습니다."
+          },
+          "group_attribute_key": {
+            "label": "그룹 속성 키",
+            "description": "그룹 목록을 담고 있는 클레임입니다. 예: groups, roles, memberOf, realm_access.roles",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "기본 워크스페이스 역할",
+            "description": "워크스페이스 역할 매핑이 없는 프로젝트 매핑을 통해 추가된 구성원에게 적용되는 워크스페이스 역할입니다.",
+            "none": "게스트 (기본값)"
+          },
+          "sync_now": "지금 동기화",
+          "sync_queued": "동기화가 시작되었습니다. 구성원이 곧 업데이트됩니다.",
+          "last_synced": "마지막 오프라인 동기화",
+          "never_synced": "오프라인 동기화가 아직 실행되지 않았습니다."
+        },
+        "workspace_mappings": {
+          "title": "워크스페이스 역할 매핑",
+          "description": "이 그룹의 구성원은 아래 역할로 워크스페이스에 추가됩니다.",
+          "empty": "아직 워크스페이스 역할 매핑이 없습니다."
+        },
+        "project_mappings": {
+          "title": "프로젝트 역할 매핑",
+          "description": "이 그룹의 구성원은 아래 역할로 선택한 프로젝트에 추가됩니다.",
+          "empty": "아직 프로젝트 역할 매핑이 없습니다.",
+          "all_projects": "모든 프로젝트"
+        },
+        "fields": {
+          "group": "그룹 이름",
+          "group_placeholder": "예: plane-admins",
+          "role": "역할",
+          "project": "프로젝트"
+        },
+        "actions": {
+          "add": "매핑 추가",
+          "remove": "제거"
+        },
+        "toasts": {
+          "saved": "설정이 저장되었습니다.",
+          "save_failed": "설정을 저장할 수 없습니다. 다시 시도해 주세요.",
+          "mapping_added": "매핑이 추가되었습니다.",
+          "mapping_removed": "매핑이 제거되었습니다.",
+          "mapping_failed": "매핑을 저장할 수 없습니다. 다시 시도해 주세요."
+        }
+      },
       "webhooks": {
         "heading": "웹훅",
         "description": "프로젝트 이벤트가 발생할 때 외부 서비스로 알림을 자동화하세요.",

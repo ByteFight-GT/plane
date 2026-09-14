@@ -25,6 +25,8 @@ import type { IHomeStore } from "./home";
 import { HomeStore } from "./home";
 import type { IWebhookStore } from "./webhook.store";
 import { WebhookStore } from "./webhook.store";
+import type { IGroupSyncStore } from "./group-sync.store";
+import { GroupSyncStore } from "./group-sync.store";
 
 export interface IWorkspaceRootStore {
   loader: boolean;
@@ -66,6 +68,7 @@ export interface IWorkspaceRootStore {
   mutateWorkspaceMembersActivity: (workspaceSlug: string) => Promise<void>;
   // sub-stores
   webhook: IWebhookStore;
+  groupSync: IGroupSyncStore;
   apiToken: IApiTokenStore;
   home: IHomeStore;
 }
@@ -84,6 +87,7 @@ export class BaseWorkspaceRootStore implements IWorkspaceRootStore {
   home;
   // sub-stores
   webhook: IWebhookStore;
+  groupSync: IGroupSyncStore;
   apiToken: IApiTokenStore;
 
   constructor(_rootStore: CoreRootStore) {
@@ -120,6 +124,7 @@ export class BaseWorkspaceRootStore implements IWorkspaceRootStore {
     this.home = new HomeStore();
     // sub-stores
     this.webhook = new WebhookStore(_rootStore);
+    this.groupSync = new GroupSyncStore(_rootStore);
     this.apiToken = new ApiTokenStore(_rootStore);
   }
 

@@ -60,6 +60,7 @@ class OIDCOAuthProvider(OauthAdapter):
             OIDC_CLIENT_ID,
             OIDC_CLIENT_SECRET,
             OIDC_REQUIRE_EMAIL_VERIFIED,
+            OIDC_OFFLINE_ACCESS,
         ) = get_configuration_value(
             [
                 {"key": "OIDC_ISSUER_URL", "default": os.environ.get("OIDC_ISSUER_URL")},
@@ -68,6 +69,10 @@ class OIDCOAuthProvider(OauthAdapter):
                 {
                     "key": "OIDC_REQUIRE_EMAIL_VERIFIED",
                     "default": os.environ.get("OIDC_REQUIRE_EMAIL_VERIFIED", "0"),
+                },
+                {
+                    "key": "OIDC_OFFLINE_ACCESS",
+                    "default": os.environ.get("OIDC_OFFLINE_ACCESS", "0"),
                 },
             ]
         )
@@ -90,6 +95,11 @@ class OIDCOAuthProvider(OauthAdapter):
         self.nonce = nonce
         self.code_verifier = code_verifier
         self.id_token_claims = {}
+        self.claims = {}
+        # ``offline_access`` yields long-lived refresh tokens (Keycloak "offline
+        # tokens"), which the periodic group sync needs to re-read group claims
+        # without the user present.
+        self.scope = "openid email profile" + (" offline_access" if OIDC_OFFLINE_ACCESS == "1" else "")
 
         discovery = self._get_discovery_document()
         # The ``iss`` claim must match the issuer exactly as the provider
@@ -334,6 +344,7 @@ class OIDCOAuthProvider(OauthAdapter):
 
     def set_user_data(self):
         claims = {**self.id_token_claims, **self._get_userinfo_claims()}
+        self.claims = claims
 
         email = claims.get("email")
         if not email:
@@ -374,3 +385,88 @@ class OIDCOAuthProvider(OauthAdapter):
                 },
             }
         )
+
+    # ------------------------------------------------------------------ #
+    # Group sync integration
+    # ------------------------------------------------------------------ #
+    def is_provisioned_by_provider(self, email):
+        from plane.utils.group_sync import claims_match_any_mapping
+
+        return claims_match_any_mapping(self.claims)
+
+    def authenticate(self):
+        user = super().authenticate()
+        # Reconcile workspace / project memberships from the asserted groups.
+        # Runs after login succeeded and never raises (sync errors must not block sign-in).
+        from plane.utils.group_sync import sync_user_groups
+
+        sync_user_groups(user, self.claims, trigger="login")
+        return user
+
+    def refresh_claims(self, account):
+        """
+        Re-read the user's claims without the user present, using the refresh
+        token stored on ``account``. Returns the merged claims, or ``None`` when
+        the refresh token is gone or rejected (the user must log in again).
+        """
+        if not account.refresh_token:
+            return None
+        try:
+            response = requests.post(
+                self.token_url,
+                data={
+                    "grant_type": "refresh_token",
+                    "refresh_token": account.refresh_token,
+                    "client_id": self.client_id,
+                    "client_secret": self.client_secret,
+                },
+                headers={"Accept": "application/json"},
+                timeout=HTTP_TIMEOUT,
+            )
+            if response.status_code >= 400:
+                self.logger.info("OIDC refresh rejected for account %s (%s)", account.id, response.status_code)
+                return None
+            token_response = response.json()
+        except (requests.RequestException, ValueError):
+            self.logger.warning("OIDC refresh request failed for account %s", account.id)
+            return None
+
+        id_token = token_response.get("id_token")
+        self.id_token_claims = self._verify_id_token(id_token) if id_token else {"sub": account.provider_account_id}
+        super().set_token_data(
+            {
+                "access_token": token_response.get("access_token"),
+                "refresh_token": token_response.get("refresh_token") or account.refresh_token,
+                "access_token_expired_at": (
+                    datetime.now(tz=pytz.utc) + timedelta(seconds=int(token_response.get("expires_in")))
+                    if token_response.get("expires_in")
+                    else None
+                ),
+                "refresh_token_expired_at": (
+                    datetime.now(tz=pytz.utc) + timedelta(seconds=int(token_response.get("refresh_expires_in")))
+                    if token_response.get("refresh_expires_in")
+                    else account.refresh_token_expired_at
+                ),
+                "id_token": id_token or account.id_token,
+            }
+        )
+        claims = {**self.id_token_claims, **self._get_userinfo_claims()}
+        self.claims = claims
+
+        # Persist rotated tokens so the next run keeps working.
+        account.access_token = self.token_data["access_token"]
+        account.refresh_token = self.token_data["refresh_token"]
+        account.access_token_expired_at = self.token_data["access_token_expired_at"]
+        account.refresh_token_expired_at = self.token_data["refresh_token_expired_at"]
+        account.id_token = self.token_data["id_token"]
+        account.save(
+            update_fields=[
+                "access_token",
+                "refresh_token",
+                "access_token_expired_at",
+                "refresh_token_expired_at",
+                "id_token",
+                "updated_at",
+            ]
+        )
+        return claims

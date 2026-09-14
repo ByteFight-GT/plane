@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Group syncing",
+        "description": "Map groups from your identity provider to workspace and project roles. Members are added, updated, or removed automatically when they sign in through SSO.",
+        "settings": {
+          "title": "Sync settings",
+          "sync_on_login": {
+            "label": "Sync on login",
+            "description": "Update the member's access every time they sign in through SSO."
+          },
+          "offline_sync": {
+            "label": "Offline sync",
+            "description": "Refresh access every two hours in the background using stored refresh tokens. Requires offline access to be enabled in the OpenID Connect settings."
+          },
+          "auto_remove": {
+            "label": "Auto remove",
+            "description": "Revoke access that was granted by a group mapping when the member leaves the group. Access granted manually is never removed."
+          },
+          "group_attribute_key": {
+            "label": "Group attribute key",
+            "description": "The claim that carries the group list, for example groups, roles, memberOf, or realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Default workspace role",
+            "description": "Workspace role for members added through a project mapping that has no workspace role mapping.",
+            "none": "Guest (default)"
+          },
+          "sync_now": "Sync now",
+          "sync_queued": "Sync started. Members will be updated shortly.",
+          "last_synced": "Last offline sync",
+          "never_synced": "Offline sync has not run yet."
+        },
+        "workspace_mappings": {
+          "title": "Workspace role mappings",
+          "description": "Members of these groups are added to the workspace with the role below.",
+          "empty": "No workspace role mappings yet."
+        },
+        "project_mappings": {
+          "title": "Project role mappings",
+          "description": "Members of these groups are added to the selected project with the role below.",
+          "empty": "No project role mappings yet.",
+          "all_projects": "All projects"
+        },
+        "fields": {
+          "group": "Group name",
+          "group_placeholder": "e.g. plane-admins",
+          "role": "Role",
+          "project": "Project"
+        },
+        "actions": {
+          "add": "Add mapping",
+          "remove": "Remove"
+        },
+        "toasts": {
+          "saved": "Settings saved.",
+          "save_failed": "Could not save settings. Please try again.",
+          "mapping_added": "Mapping added.",
+          "mapping_removed": "Mapping removed.",
+          "mapping_failed": "Could not save mapping. Please try again."
+        }
+      },
       "webhooks": {
         "heading": "Webhooks",
         "description": "Automate notifications to external services when project events occur.",

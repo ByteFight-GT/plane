@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Sinkronisasi grup",
+        "description": "Petakan grup dari penyedia identitas Anda ke peran ruang kerja dan proyek. Anggota ditambahkan, diperbarui, atau dihapus secara otomatis saat mereka masuk melalui SSO.",
+        "settings": {
+          "title": "Pengaturan sinkronisasi",
+          "sync_on_login": {
+            "label": "Sinkronkan saat masuk",
+            "description": "Memperbarui akses anggota setiap kali mereka masuk melalui SSO."
+          },
+          "offline_sync": {
+            "label": "Sinkronisasi offline",
+            "description": "Menyegarkan akses setiap dua jam di latar belakang menggunakan token penyegaran yang tersimpan. Memerlukan akses offline yang diaktifkan di pengaturan OpenID Connect."
+          },
+          "auto_remove": {
+            "label": "Hapus otomatis",
+            "description": "Mencabut akses yang diberikan oleh pemetaan grup saat anggota keluar dari grup. Akses yang diberikan secara manual tidak pernah dihapus."
+          },
+          "group_attribute_key": {
+            "label": "Kunci atribut grup",
+            "description": "Klaim yang memuat daftar grup, misalnya groups, roles, memberOf, atau realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Peran ruang kerja default",
+            "description": "Peran ruang kerja untuk anggota yang ditambahkan melalui pemetaan proyek tanpa pemetaan peran ruang kerja.",
+            "none": "Tamu (default)"
+          },
+          "sync_now": "Sinkronkan sekarang",
+          "sync_queued": "Sinkronisasi dimulai. Anggota akan segera diperbarui.",
+          "last_synced": "Sinkronisasi offline terakhir",
+          "never_synced": "Sinkronisasi offline belum pernah dijalankan."
+        },
+        "workspace_mappings": {
+          "title": "Pemetaan peran ruang kerja",
+          "description": "Anggota grup ini ditambahkan ke ruang kerja dengan peran di bawah ini.",
+          "empty": "Belum ada pemetaan peran ruang kerja."
+        },
+        "project_mappings": {
+          "title": "Pemetaan peran proyek",
+          "description": "Anggota grup ini ditambahkan ke proyek yang dipilih dengan peran di bawah ini.",
+          "empty": "Belum ada pemetaan peran proyek.",
+          "all_projects": "Semua proyek"
+        },
+        "fields": {
+          "group": "Nama grup",
+          "group_placeholder": "mis. plane-admins",
+          "role": "Peran",
+          "project": "Proyek"
+        },
+        "actions": {
+          "add": "Tambahkan pemetaan",
+          "remove": "Hapus"
+        },
+        "toasts": {
+          "saved": "Pengaturan disimpan.",
+          "save_failed": "Pengaturan tidak dapat disimpan. Silakan coba lagi.",
+          "mapping_added": "Pemetaan ditambahkan.",
+          "mapping_removed": "Pemetaan dihapus.",
+          "mapping_failed": "Pemetaan tidak dapat disimpan. Silakan coba lagi."
+        }
+      },
       "webhooks": {
         "heading": "Webhook",
         "description": "Otomatiskan notifikasi ke layanan eksternal saat peristiwa proyek terjadi.",

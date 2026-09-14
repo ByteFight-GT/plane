@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Grup eşitleme",
+        "description": "Kimlik sağlayıcınızdaki grupları çalışma alanı ve proje rolleriyle eşleyin. Üyeler SSO ile oturum açtığında otomatik olarak eklenir, güncellenir veya kaldırılır.",
+        "settings": {
+          "title": "Eşitleme ayarları",
+          "sync_on_login": {
+            "label": "Oturum açarken eşitle",
+            "description": "Üyenin erişimini SSO ile her oturum açışında günceller."
+          },
+          "offline_sync": {
+            "label": "Çevrimdışı eşitleme",
+            "description": "Saklanan yenileme belirteçlerini kullanarak erişimi arka planda iki saatte bir yeniler. OpenID Connect ayarlarında çevrimdışı erişimin etkinleştirilmesini gerektirir."
+          },
+          "auto_remove": {
+            "label": "Otomatik kaldırma",
+            "description": "Üye gruptan ayrıldığında grup eşlemesiyle verilen erişimi iptal eder. Elle verilen erişim hiçbir zaman kaldırılmaz."
+          },
+          "group_attribute_key": {
+            "label": "Grup özniteliği anahtarı",
+            "description": "Grup listesini taşıyan talep; örneğin groups, roles, memberOf veya realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Varsayılan çalışma alanı rolü",
+            "description": "Çalışma alanı rol eşlemesi olmayan bir proje eşlemesiyle eklenen üyeler için çalışma alanı rolü.",
+            "none": "Misafir (varsayılan)"
+          },
+          "sync_now": "Şimdi eşitle",
+          "sync_queued": "Eşitleme başlatıldı. Üyeler kısa süre içinde güncellenecek.",
+          "last_synced": "Son çevrimdışı eşitleme",
+          "never_synced": "Çevrimdışı eşitleme henüz çalıştırılmadı."
+        },
+        "workspace_mappings": {
+          "title": "Çalışma alanı rol eşlemeleri",
+          "description": "Bu grupların üyeleri, aşağıdaki rolle çalışma alanına eklenir.",
+          "empty": "Henüz çalışma alanı rol eşlemesi yok."
+        },
+        "project_mappings": {
+          "title": "Proje rol eşlemeleri",
+          "description": "Bu grupların üyeleri, aşağıdaki rolle seçilen projeye eklenir.",
+          "empty": "Henüz proje rol eşlemesi yok.",
+          "all_projects": "Tüm projeler"
+        },
+        "fields": {
+          "group": "Grup adı",
+          "group_placeholder": "örn. plane-admins",
+          "role": "Rol",
+          "project": "Proje"
+        },
+        "actions": {
+          "add": "Eşleme ekle",
+          "remove": "Kaldır"
+        },
+        "toasts": {
+          "saved": "Ayarlar kaydedildi.",
+          "save_failed": "Ayarlar kaydedilemedi. Lütfen tekrar deneyin.",
+          "mapping_added": "Eşleme eklendi.",
+          "mapping_removed": "Eşleme kaldırıldı.",
+          "mapping_failed": "Eşleme kaydedilemedi. Lütfen tekrar deneyin."
+        }
+      },
       "webhooks": {
         "heading": "Webhook'lar",
         "description": "Proje olayları gerçekleştiğinde harici hizmetlere bildirimleri otomatikleştirin.",

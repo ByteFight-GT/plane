@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "群組同步",
+        "description": "將身分提供者中的群組對應到工作區與專案角色。成員透過 SSO 登入時會自動新增、更新或移除。",
+        "settings": {
+          "title": "同步設定",
+          "sync_on_login": {
+            "label": "登入時同步",
+            "description": "成員每次透過 SSO 登入時更新其存取權限。"
+          },
+          "offline_sync": {
+            "label": "離線同步",
+            "description": "使用已儲存的重新整理權杖，每兩小時在背景重新整理一次存取權限。需要在 OpenID Connect 設定中啟用離線存取。"
+          },
+          "auto_remove": {
+            "label": "自動移除",
+            "description": "當成員離開群組時，撤銷透過群組對應授予的存取權限。手動授予的存取權限永遠不會被移除。"
+          },
+          "group_attribute_key": {
+            "label": "群組屬性鍵",
+            "description": "包含群組清單的宣告，例如 groups、roles、memberOf 或 realm_access.roles。",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "預設工作區角色",
+            "description": "透過沒有工作區角色對應的專案對應新增的成員所獲得的工作區角色。",
+            "none": "訪客（預設）"
+          },
+          "sync_now": "立即同步",
+          "sync_queued": "同步已開始。成員將很快更新。",
+          "last_synced": "上次離線同步",
+          "never_synced": "離線同步尚未執行。"
+        },
+        "workspace_mappings": {
+          "title": "工作區角色對應",
+          "description": "這些群組的成員將以下方角色新增至工作區。",
+          "empty": "尚無工作區角色對應。"
+        },
+        "project_mappings": {
+          "title": "專案角色對應",
+          "description": "這些群組的成員將以下方角色新增至所選專案。",
+          "empty": "尚無專案角色對應。",
+          "all_projects": "所有專案"
+        },
+        "fields": {
+          "group": "群組名稱",
+          "group_placeholder": "例如 plane-admins",
+          "role": "角色",
+          "project": "專案"
+        },
+        "actions": {
+          "add": "新增對應",
+          "remove": "移除"
+        },
+        "toasts": {
+          "saved": "設定已儲存。",
+          "save_failed": "無法儲存設定，請再試一次。",
+          "mapping_added": "對應已新增。",
+          "mapping_removed": "對應已移除。",
+          "mapping_failed": "無法儲存對應，請再試一次。"
+        }
+      },
       "webhooks": {
         "heading": "Webhooks",
         "description": "當專案事件發生時，自動向外部服務傳送通知。",

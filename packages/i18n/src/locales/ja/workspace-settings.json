@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "グループ同期",
+        "description": "ID プロバイダーのグループをワークスペースおよびプロジェクトのロールに対応付けます。メンバーは SSO でサインインした際に自動的に追加・更新・削除されます。",
+        "settings": {
+          "title": "同期設定",
+          "sync_on_login": {
+            "label": "サインイン時に同期",
+            "description": "SSO でサインインするたびにメンバーのアクセス権を更新します。"
+          },
+          "offline_sync": {
+            "label": "オフライン同期",
+            "description": "保存された更新トークンを使用して、2 時間ごとにバックグラウンドでアクセス権を更新します。OpenID Connect 設定でオフラインアクセスを有効にする必要があります。"
+          },
+          "auto_remove": {
+            "label": "自動削除",
+            "description": "メンバーがグループから外れた際に、グループの対応付けによって付与されたアクセス権を取り消します。手動で付与されたアクセス権が削除されることはありません。"
+          },
+          "group_attribute_key": {
+            "label": "グループ属性キー",
+            "description": "グループの一覧を含むクレームです。例：groups、roles、memberOf、realm_access.roles。",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "既定のワークスペースロール",
+            "description": "ワークスペースロールの対応付けがないプロジェクトの対応付けによって追加されたメンバーに適用するワークスペースロールです。",
+            "none": "ゲスト（既定）"
+          },
+          "sync_now": "今すぐ同期",
+          "sync_queued": "同期を開始しました。メンバーはまもなく更新されます。",
+          "last_synced": "最後のオフライン同期",
+          "never_synced": "オフライン同期はまだ実行されていません。"
+        },
+        "workspace_mappings": {
+          "title": "ワークスペースロールの対応付け",
+          "description": "これらのグループのメンバーは、以下のロールでワークスペースに追加されます。",
+          "empty": "ワークスペースロールの対応付けはまだありません。"
+        },
+        "project_mappings": {
+          "title": "プロジェクトロールの対応付け",
+          "description": "これらのグループのメンバーは、以下のロールで選択したプロジェクトに追加されます。",
+          "empty": "プロジェクトロールの対応付けはまだありません。",
+          "all_projects": "すべてのプロジェクト"
+        },
+        "fields": {
+          "group": "グループ名",
+          "group_placeholder": "例：plane-admins",
+          "role": "ロール",
+          "project": "プロジェクト"
+        },
+        "actions": {
+          "add": "対応付けを追加",
+          "remove": "削除"
+        },
+        "toasts": {
+          "saved": "設定を保存しました。",
+          "save_failed": "設定を保存できませんでした。もう一度お試しください。",
+          "mapping_added": "対応付けを追加しました。",
+          "mapping_removed": "対応付けを削除しました。",
+          "mapping_failed": "対応付けを保存できませんでした。もう一度お試しください。"
+        }
+      },
       "webhooks": {
         "heading": "Webhook",
         "description": "プロジェクトイベントが発生したときに、外部サービスへの通知を自動化します。",

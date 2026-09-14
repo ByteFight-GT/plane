@@ -103,12 +103,16 @@ class Adapter:
         """Check if sign up is enabled or not and raise exception if not enabled"""
 
         # Get configuration value
-        (ENABLE_SIGNUP,) = get_configuration_value([
-            {"key": "ENABLE_SIGNUP", "default": os.environ.get("ENABLE_SIGNUP", "1")}
-        ])
+        (ENABLE_SIGNUP,) = get_configuration_value(
+            [{"key": "ENABLE_SIGNUP", "default": os.environ.get("ENABLE_SIGNUP", "1")}]
+        )
 
         # Check if sign up is disabled and invite is present or not
-        if ENABLE_SIGNUP == "0" and not WorkspaceMemberInvite.objects.filter(email=email).exists():
+        if (
+            ENABLE_SIGNUP == "0"
+            and not WorkspaceMemberInvite.objects.filter(email=email).exists()
+            and not self.is_provisioned_by_provider(email)
+        ):
             self.logger.warning("Sign up is disabled and invite is not present")
             # Raise exception
             raise AuthenticationException(
@@ -121,6 +125,14 @@ class Adapter:
 
     def get_avatar_download_headers(self):
         return {}
+
+    def is_provisioned_by_provider(self, email):
+        """
+        True when the identity provider itself vouches for this user's access
+        (e.g. an OIDC group mapped to a workspace role), so a sign-up should be
+        allowed even when public sign-up is disabled and no invite exists.
+        """
+        return False
 
     def check_sync_enabled(self):
         """Check if sync is enabled for the provider"""

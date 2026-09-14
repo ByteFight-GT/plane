@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Sincronizarea grupurilor",
+        "description": "Asociați grupurile din furnizorul dumneavoastră de identitate cu roluri din spațiul de lucru și din proiecte. Membrii sunt adăugați, actualizați sau eliminați automat atunci când se autentifică prin SSO.",
+        "settings": {
+          "title": "Setări de sincronizare",
+          "sync_on_login": {
+            "label": "Sincronizare la autentificare",
+            "description": "Actualizează accesul membrului la fiecare autentificare prin SSO."
+          },
+          "offline_sync": {
+            "label": "Sincronizare offline",
+            "description": "Reîmprospătează accesul la fiecare două ore în fundal, folosind jetoanele de reîmprospătare stocate. Necesită activarea accesului offline în setările OpenID Connect."
+          },
+          "auto_remove": {
+            "label": "Eliminare automată",
+            "description": "Revocă accesul acordat printr-o asociere de grup atunci când membrul părăsește grupul. Accesul acordat manual nu este eliminat niciodată."
+          },
+          "group_attribute_key": {
+            "label": "Cheia atributului de grup",
+            "description": "Revendicarea care conține lista grupurilor, de exemplu groups, roles, memberOf sau realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Rol implicit în spațiul de lucru",
+            "description": "Rolul din spațiul de lucru pentru membrii adăugați printr-o asociere de proiect care nu are o asociere de rol în spațiul de lucru.",
+            "none": "Invitat (implicit)"
+          },
+          "sync_now": "Sincronizează acum",
+          "sync_queued": "Sincronizarea a început. Membrii vor fi actualizați în curând.",
+          "last_synced": "Ultima sincronizare offline",
+          "never_synced": "Sincronizarea offline nu a fost încă executată."
+        },
+        "workspace_mappings": {
+          "title": "Asocieri de roluri în spațiul de lucru",
+          "description": "Membrii acestor grupuri sunt adăugați în spațiul de lucru cu rolul de mai jos.",
+          "empty": "Nu există încă asocieri de roluri în spațiul de lucru."
+        },
+        "project_mappings": {
+          "title": "Asocieri de roluri în proiecte",
+          "description": "Membrii acestor grupuri sunt adăugați în proiectul selectat cu rolul de mai jos.",
+          "empty": "Nu există încă asocieri de roluri în proiecte.",
+          "all_projects": "Toate proiectele"
+        },
+        "fields": {
+          "group": "Numele grupului",
+          "group_placeholder": "de ex. plane-admins",
+          "role": "Rol",
+          "project": "Proiect"
+        },
+        "actions": {
+          "add": "Adaugă asociere",
+          "remove": "Elimină"
+        },
+        "toasts": {
+          "saved": "Setările au fost salvate.",
+          "save_failed": "Setările nu au putut fi salvate. Vă rugăm să încercați din nou.",
+          "mapping_added": "Asociere adăugată.",
+          "mapping_removed": "Asociere eliminată.",
+          "mapping_failed": "Asocierea nu a putut fi salvată. Vă rugăm să încercați din nou."
+        }
+      },
       "webhooks": {
         "heading": "Webhook-uri",
         "description": "Automatizează notificările către servicii externe când se produc evenimente ale proiectului.",

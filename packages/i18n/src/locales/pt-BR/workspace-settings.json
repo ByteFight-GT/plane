@@ -97,6 +97,67 @@
           }
         }
       },
+      "group_sync": {
+        "title": "Sincronização de grupos",
+        "description": "Mapeie grupos do seu provedor de identidade para funções de espaço de trabalho e de projeto. Os membros são adicionados, atualizados ou removidos automaticamente quando entram via SSO.",
+        "settings": {
+          "title": "Configurações de sincronização",
+          "sync_on_login": {
+            "label": "Sincronizar ao entrar",
+            "description": "Atualiza o acesso do membro sempre que ele entra via SSO."
+          },
+          "offline_sync": {
+            "label": "Sincronização offline",
+            "description": "Atualiza o acesso a cada duas horas em segundo plano usando os tokens de atualização armazenados. Requer que o acesso offline esteja ativado nas configurações do OpenID Connect."
+          },
+          "auto_remove": {
+            "label": "Remoção automática",
+            "description": "Revoga o acesso concedido por um mapeamento de grupo quando o membro sai do grupo. O acesso concedido manualmente nunca é removido."
+          },
+          "group_attribute_key": {
+            "label": "Chave do atributo de grupo",
+            "description": "A declaração que contém a lista de grupos, por exemplo groups, roles, memberOf ou realm_access.roles.",
+            "placeholder": "groups"
+          },
+          "default_workspace_role": {
+            "label": "Função padrão do espaço de trabalho",
+            "description": "Função de espaço de trabalho para membros adicionados por um mapeamento de projeto que não possui mapeamento de função de espaço de trabalho.",
+            "none": "Convidado (padrão)"
+          },
+          "sync_now": "Sincronizar agora",
+          "sync_queued": "Sincronização iniciada. Os membros serão atualizados em breve.",
+          "last_synced": "Última sincronização offline",
+          "never_synced": "A sincronização offline ainda não foi executada."
+        },
+        "workspace_mappings": {
+          "title": "Mapeamentos de função do espaço de trabalho",
+          "description": "Os membros desses grupos são adicionados ao espaço de trabalho com a função abaixo.",
+          "empty": "Ainda não há mapeamentos de função do espaço de trabalho."
+        },
+        "project_mappings": {
+          "title": "Mapeamentos de função de projeto",
+          "description": "Os membros desses grupos são adicionados ao projeto selecionado com a função abaixo.",
+          "empty": "Ainda não há mapeamentos de função de projeto.",
+          "all_projects": "Todos os projetos"
+        },
+        "fields": {
+          "group": "Nome do grupo",
+          "group_placeholder": "ex.: plane-admins",
+          "role": "Função",
+          "project": "Projeto"
+        },
+        "actions": {
+          "add": "Adicionar mapeamento",
+          "remove": "Remover"
+        },
+        "toasts": {
+          "saved": "Configurações salvas.",
+          "save_failed": "Não foi possível salvar as configurações. Tente novamente.",
+          "mapping_added": "Mapeamento adicionado.",
+          "mapping_removed": "Mapeamento removido.",
+          "mapping_failed": "Não foi possível salvar o mapeamento. Tente novamente."
+        }
+      },
       "webhooks": {
         "heading": "Webhooks",
         "description": "Automatize notificações para serviços externos quando ocorrerem eventos do projeto.",

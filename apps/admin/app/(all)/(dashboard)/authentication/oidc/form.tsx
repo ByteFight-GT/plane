@@ -56,6 +56,7 @@ export function InstanceOIDCConfigForm(props: Props) {
       OIDC_CLIENT_ID: config["OIDC_CLIENT_ID"],
       OIDC_CLIENT_SECRET: config["OIDC_CLIENT_SECRET"],
       OIDC_REQUIRE_EMAIL_VERIFIED: config["OIDC_REQUIRE_EMAIL_VERIFIED"] || "0",
+      OIDC_OFFLINE_ACCESS: config["OIDC_OFFLINE_ACCESS"] || "0",
       ENABLE_OIDC_SYNC: config["ENABLE_OIDC_SYNC"] || "0",
     },
   });
@@ -143,6 +144,7 @@ export function InstanceOIDCConfigForm(props: Props) {
         OIDC_CLIENT_ID: response.find((item) => item.key === "OIDC_CLIENT_ID")?.value,
         OIDC_CLIENT_SECRET: response.find((item) => item.key === "OIDC_CLIENT_SECRET")?.value,
         OIDC_REQUIRE_EMAIL_VERIFIED: response.find((item) => item.key === "OIDC_REQUIRE_EMAIL_VERIFIED")?.value,
+        OIDC_OFFLINE_ACCESS: response.find((item) => item.key === "OIDC_OFFLINE_ACCESS")?.value,
         ENABLE_OIDC_SYNC: response.find((item) => item.key === "ENABLE_OIDC_SYNC")?.value,
       });
     } catch (err) {
@@ -193,6 +195,25 @@ export function InstanceOIDCConfigForm(props: Props) {
                 <Controller
                   control={control}
                   name="OIDC_REQUIRE_EMAIL_VERIFIED"
+                  render={({ field: { value, onChange } }) => {
+                    const isOn = value === "1";
+                    return <Switch checked={isOn} onCheckedChange={() => onChange(isOn ? "0" : "1")} size="sm" />;
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-between gap-1">
+              <div className="flex flex-col gap-1">
+                <h4 className="text-sm text-custom-text-300">Request offline access</h4>
+                <p className="text-xs text-custom-text-400">
+                  Adds the <CodeBlock darkerShade>offline_access</CodeBlock> scope so Plane receives long-lived refresh
+                  tokens. Required for scheduled (offline) group syncing; users must sign in again after enabling it.
+                </p>
+              </div>
+              <div className="relative">
+                <Controller
+                  control={control}
+                  name="OIDC_OFFLINE_ACCESS"
                   render={({ field: { value, onChange } }) => {
                     const isOn = value === "1";
                     return <Switch checked={isOn} onCheckedChange={() => onChange(isOn ? "0" : "1")} size="sm" />;
