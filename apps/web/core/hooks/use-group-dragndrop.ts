@@ -12,6 +12,7 @@ import { handleGroupDragDrop } from "@/components/issues/issue-layouts/utils";
 import { ISSUE_FILTER_DEFAULT_DATA } from "@/store/issue/helpers/base-issues.store";
 import { useIssueDetail } from "./store/use-issue-detail";
 import { useIssues } from "./store/use-issues";
+import { useProjectState } from "./store/use-project-state";
 import { useIssuesActions } from "./use-issues-actions";
 
 type DNDStoreType =
@@ -20,6 +21,7 @@ type DNDStoreType =
   | EIssuesStoreType.CYCLE
   | EIssuesStoreType.PROJECT_VIEW
   | EIssuesStoreType.PROFILE
+  | EIssuesStoreType.GLOBAL
   | EIssuesStoreType.ARCHIVED
   | EIssuesStoreType.WORKSPACE_DRAFT
   | EIssuesStoreType.TEAM
@@ -42,6 +44,7 @@ export const useGroupIssuesDragNDrop = (
   const {
     issues: { getIssueIds, addCycleToIssue, removeCycleFromIssue, changeModulesInIssue },
   } = useIssues(storeType);
+  const { getProjectStates } = useProjectState();
 
   /**
    * update Issue on Drop, checks if modules or cycles are changed and then calls appropriate functions
@@ -68,6 +71,28 @@ export const useGroupIssuesDragNDrop = (
     };
     const moduleKey = ISSUE_FILTER_DEFAULT_DATA["module"];
     const cycleKey = ISSUE_FILTER_DEFAULT_DATA["cycle"];
+    const stateGroupKey = ISSUE_FILTER_DEFAULT_DATA["state_detail.group"];
+
+    // Dropping onto a state-group column (workspace-level boards): states are per
+    // project, so translate the target group into that project's state — the
+    // default state of the group when there is one, otherwise the first by sequence.
+    if (Object.keys(data).includes(stateGroupKey)) {
+      const targetGroup = data[stateGroupKey];
+      delete data[stateGroupKey];
+      const candidates = (getProjectStates(projectId) ?? [])
+        .filter((state) => state.group === targetGroup)
+        .sort((a, b) => a.sequence - b.sequence);
+      const targetState = candidates.find((state) => state.default) ?? candidates[0];
+      if (!targetState) {
+        setToast({
+          type: TOAST_TYPE.ERROR,
+          title: "Error!",
+          message: "This project has no state in that group",
+        });
+        return;
+      }
+      data.state_id = targetState.id;
+    }
 
     const isModuleChanged = Object.keys(data).includes(moduleKey);
     const isCycleChanged = Object.keys(data).includes(cycleKey);

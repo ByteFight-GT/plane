@@ -201,6 +201,19 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
           values: [],
         },
       },
+      kanban: {
+        display_properties: ISSUE_DISPLAY_PROPERTIES_KEYS,
+        display_filters: {
+          // states are per project, so group across the workspace by state group instead
+          group_by: ["state_detail.group", "priority", "project", "labels", "assignees", "created_by"],
+          order_by: ["sort_order", "-created_at", "-updated_at", "start_date", "-priority"],
+          type: ["active", "backlog"],
+        },
+        extra_options: {
+          access: true,
+          values: ["show_empty_groups"],
+        },
+      },
     },
   },
   issues: {

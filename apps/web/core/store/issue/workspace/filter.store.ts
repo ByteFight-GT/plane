@@ -242,10 +242,11 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
             _filters.displayFilters.sub_group_by = null;
             updatedDisplayFilters.sub_group_by = null;
           }
-          // set group_by to state if layout is switched to kanban and group_by is null
-          if (_filters.displayFilters.layout === "kanban" && _filters.displayFilters.group_by === null) {
-            _filters.displayFilters.group_by = "state";
-            updatedDisplayFilters.group_by = "state";
+          // set group_by to state group if layout is switched to kanban and group_by is null
+          // (states are per project, so a workspace-level board groups by state group)
+          if (_filters.displayFilters.layout === "kanban" && !_filters.displayFilters.group_by) {
+            _filters.displayFilters.group_by = "state_detail.group";
+            updatedDisplayFilters.group_by = "state_detail.group";
           }
 
           runInAction(() => {
