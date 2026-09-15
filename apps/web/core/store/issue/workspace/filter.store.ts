@@ -263,10 +263,17 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
 
           this.rootIssueStore.workspaceIssues.fetchIssuesWithExistingPagination(workspaceSlug, viewId, "mutation");
 
-          if (["all-issues", "assigned", "created", "subscribed"].includes(viewId))
+          if (STATIC_VIEW_TYPES.includes(viewId)) {
             this.handleIssuesLocalFilters.set(EIssuesStoreType.GLOBAL, type, workspaceSlug, undefined, viewId, {
               display_filters: _filters.displayFilters,
             });
+          } else {
+            // saved workspace view: persist layout / grouping on the view itself so it
+            // survives reloads and is shared across devices (ignored when not permitted)
+            this.rootIssueStore.rootStore.globalView
+              .updateGlobalView(workspaceSlug, viewId, { display_filters: _filters.displayFilters }, false)
+              .catch(() => undefined);
+          }
           break;
         }
         case EIssueFilterType.DISPLAY_PROPERTIES: {
@@ -281,11 +288,16 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
                 updatedDisplayProperties[_key as keyof IIssueDisplayProperties]
               );
             });
-            if (["all-issues", "assigned", "created", "subscribed"].includes(viewId))
-              this.handleIssuesLocalFilters.set(EIssuesStoreType.GLOBAL, type, workspaceSlug, undefined, viewId, {
-                display_properties: _filters.displayProperties,
-              });
           });
+          if (STATIC_VIEW_TYPES.includes(viewId)) {
+            this.handleIssuesLocalFilters.set(EIssuesStoreType.GLOBAL, type, workspaceSlug, undefined, viewId, {
+              display_properties: _filters.displayProperties,
+            });
+          } else {
+            this.rootIssueStore.rootStore.globalView
+              .updateGlobalView(workspaceSlug, viewId, { display_properties: _filters.displayProperties }, false)
+              .catch(() => undefined);
+          }
           break;
         }
 
