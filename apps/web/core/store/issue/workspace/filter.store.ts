@@ -100,7 +100,9 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
     const userFilters = this.getIssueFilters(viewId);
     if (!userFilters) return undefined;
 
-    const filteredParams = handleIssueQueryParamsByLayout(EIssueLayoutTypes.SPREADSHEET, "my_issues");
+    // use the active layout so kanban gets group_by / sub_group_by params
+    const layout = userFilters?.displayFilters?.layout ?? EIssueLayoutTypes.SPREADSHEET;
+    const filteredParams = handleIssueQueryParamsByLayout(layout, "my_issues");
     if (!filteredParams) return undefined;
 
     const filteredRouteParams: Partial<Record<TIssueParams, string | boolean>> = this.computedFilteredParams(
