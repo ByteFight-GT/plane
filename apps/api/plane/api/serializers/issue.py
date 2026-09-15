@@ -11,6 +11,7 @@ from django.db import IntegrityError
 from rest_framework import serializers
 
 # Module imports
+from plane.utils.issue_parent import is_valid_parent
 from plane.db.models import (
     Issue,
     IssueType,
@@ -123,9 +124,9 @@ class IssueSerializer(BaseSerializer):
         # Validate labels are from project
         if data.get("labels", []):
             valid_label_ids = set(
-                Label.objects.filter(
-                    project_id=self.context.get("project_id"), id__in=data["labels"]
-                ).values_list("id", flat=True)
+                Label.objects.filter(project_id=self.context.get("project_id"), id__in=data["labels"]).values_list(
+                    "id", flat=True
+                )
             )
             invalid_label_ids = set(data["labels"]) - valid_label_ids
             if invalid_label_ids:
@@ -139,14 +140,13 @@ class IssueSerializer(BaseSerializer):
         ):
             raise serializers.ValidationError("State is not valid please pass a valid state_id")
 
-        # Check parent issue is from workspace as it can be cross workspace
-        if (
-            data.get("parent")
-            and not Issue.objects.filter(
-                workspace_id=self.context.get("workspace_id"),
-                project_id=self.context.get("project_id"),
-                pk=data.get("parent").id,
-            ).exists()
+        # The parent may live in another project of the same workspace, provided
+        # the acting user is a member of that project (see is_valid_parent).
+        request = self.context.get("request")
+        if data.get("parent") and not is_valid_parent(
+            data.get("parent"),
+            self.context.get("project_id"),
+            user=getattr(request, "user", None),
         ):
             raise serializers.ValidationError("Parent is not valid issue_id please pass a valid issue_id")
 

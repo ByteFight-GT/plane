@@ -17,6 +17,7 @@ from .user import UserLiteSerializer
 from .state import StateLiteSerializer
 from .project import ProjectLiteSerializer
 from .workspace import WorkspaceLiteSerializer
+from plane.utils.issue_parent import is_valid_parent
 from plane.db.models import (
     User,
     Issue,
@@ -175,13 +176,13 @@ class IssueCreateSerializer(BaseSerializer):
         ):
             raise serializers.ValidationError("State is not valid please pass a valid state_id")
 
-        # Check parent issue is from workspace as it can be cross workspace
-        if (
-            attrs.get("parent")
-            and not Issue.objects.filter(
-                project_id=self.context.get("project_id"),
-                pk=attrs.get("parent").id,
-            ).exists()
+        # The parent may live in another project of the same workspace, provided
+        # the acting user is a member of that project (see is_valid_parent).
+        request = self.context.get("request")
+        if attrs.get("parent") and not is_valid_parent(
+            attrs.get("parent"),
+            self.context.get("project_id"),
+            user=getattr(request, "user", None),
         ):
             raise serializers.ValidationError("Parent is not valid issue_id please pass a valid issue_id")
 

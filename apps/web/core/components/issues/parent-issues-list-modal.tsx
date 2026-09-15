@@ -8,6 +8,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 // icons
 import { RocketOutline, SearchOutline } from "@makeplane/propel/icons";
+import { Switch } from "@makeplane/propel/components/switch";
+import { Tooltip } from "@makeplane/propel/components/tooltip";
 // headless ui
 import { Combobox } from "@headlessui/react";
 // i18n
@@ -55,6 +57,7 @@ export function ParentIssuesListModal({
   const [searchTerm, setSearchTerm] = useState("");
   const [issues, setIssues] = useState<ISearchIssueResponse[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [isWorkspaceLevel, setIsWorkspaceLevel] = useState(false);
   const { isMobile } = usePlatformOS();
   const debouncedSearchTerm: string = useDebounce(searchTerm, 500);
 
@@ -78,7 +81,7 @@ export function ParentIssuesListModal({
         search: debouncedSearchTerm,
         parent: searchEpic ? undefined : true,
         issue_id: issueId,
-        workspace_search: false,
+        workspace_search: isWorkspaceLevel,
         epic: searchEpic ? true : undefined,
       })
       .then((res) => setIssues(res))
@@ -86,7 +89,7 @@ export function ParentIssuesListModal({
         setIsSearching(false);
         setIsLoading(false);
       });
-  }, [debouncedSearchTerm, isOpen, issueId, projectId, workspaceSlug]);
+  }, [debouncedSearchTerm, isOpen, issueId, isWorkspaceLevel, projectId, workspaceSlug]);
 
   return (
     <ModalCore isOpen={isOpen} handleClose={handleClose} position={EModalPosition.CENTER} width={EModalWidth.XXL}>
@@ -116,17 +119,42 @@ export function ParentIssuesListModal({
           static
           className="vertical-scrollbar scrollbar-md max-h-80 scroll-py-2 overflow-y-auto"
         >
-          {searchTerm !== "" && (
-            <h5 className="mx-2 text-13 text-secondary">
-              Search results for{" "}
-              <span className="text-primary">
-                {'"'}
-                {searchTerm}
-                {'"'}
-              </span>{" "}
-              in project:
-            </h5>
-          )}
+          <div className="mx-2 mb-1 flex items-center justify-between gap-2">
+            {searchTerm !== "" ? (
+              <h5 className="text-13 text-secondary">
+                Search results for{" "}
+                <span className="text-primary">
+                  {'"'}
+                  {searchTerm}
+                  {'"'}
+                </span>{" "}
+                {isWorkspaceLevel ? "in workspace:" : "in project:"}
+              </h5>
+            ) : (
+              <span />
+            )}
+            <Tooltip label="Toggle workspace level search" disabled={isMobile}>
+              <div
+                className={`flex flex-shrink-0 cursor-pointer items-center gap-1 text-11 ${
+                  isWorkspaceLevel ? "text-primary" : "text-secondary"
+                }`}
+              >
+                <Switch
+                  size="sm"
+                  checked={isWorkspaceLevel}
+                  onCheckedChange={setIsWorkspaceLevel}
+                  aria-label={t("common.workspace_level")}
+                />
+                <button
+                  type="button"
+                  onClick={() => setIsWorkspaceLevel((prevData) => !prevData)}
+                  className="flex-shrink-0"
+                >
+                  {t("common.workspace_level")}
+                </button>
+              </div>
+            </Tooltip>
+          </div>
 
           {isSearching || isLoading ? (
             <Loader className="space-y-3 p-3">

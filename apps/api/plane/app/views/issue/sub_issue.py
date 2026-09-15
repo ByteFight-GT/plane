@@ -7,7 +7,7 @@ import json
 
 # Django imports
 from django.utils import timezone
-from django.db.models import OuterRef, Func, F, Q, Value, UUIDField, Subquery, Count, IntegerField
+from django.db.models import OuterRef, F, Value, UUIDField, Subquery, Count, IntegerField
 from django.utils.decorators import method_decorator
 from django.views.decorators.gzip import gzip_page
 from django.contrib.postgres.aggregates import ArrayAgg
@@ -35,14 +35,21 @@ class SubIssuesEndpoint(BaseAPIView):
 
     @method_decorator(gzip_page)
     def get(self, request, slug, project_id, issue_id):
-        # SECURITY: scope the parent lookup to the URL project. ProjectEntityPermission
-        # only checks that the caller belongs to `project_id`, not that `issue_id` lives
-        # in it, so an unscoped filter leaks sub-issue metadata across projects in the
-        # same workspace.
+        # SECURITY: the parent must live in the URL project (ProjectEntityPermission only
+        # checks that the caller belongs to `project_id`, not that `issue_id` lives in
+        # it). Children may live in other projects of the workspace, so instead of
+        # scoping them to the URL project they are scoped to the projects the caller
+        # is an active member of — never leaking sub-issues of projects they can't see.
         sub_issues = (
             Issue.issue_objects.filter(
-                parent_id=issue_id, workspace__slug=slug, project_id=project_id
+                parent_id=issue_id,
+                parent__project_id=project_id,
+                workspace__slug=slug,
+                project__archived_at__isnull=True,
+                project__project_projectmember__member=request.user,
+                project__project_projectmember__is_active=True,
             )
+            .distinct()
             .annotate(
                 cycle_id=Subquery(
                     CycleIssue.objects.filter(issue=OuterRef("id"), deleted_at__isnull=True).values("cycle_id")[:1]
@@ -211,9 +218,7 @@ class SubIssuesEndpoint(BaseAPIView):
         # SECURITY: bind the parent issue to the URL workspace + project. A bare
         # pk lookup let any project member re-parent issues under a parent in a
         # different project/workspace.
-        parent_issue = Issue.issue_objects.filter(
-            pk=issue_id, workspace__slug=slug, project_id=project_id
-        ).first()
+        parent_issue = Issue.issue_objects.filter(pk=issue_id, workspace__slug=slug, project_id=project_id).first()
         if parent_issue is None:
             return Response(
                 {"error": "Parent issue not found"},
@@ -227,9 +232,19 @@ class SubIssuesEndpoint(BaseAPIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # Scope to workspace + project to prevent cross-project/cross-tenant IDOR
-        sub_issues = Issue.issue_objects.filter(
-            id__in=sub_issue_ids, workspace__slug=slug, project_id=project_id
+        # Scope to the workspace and to projects the caller is an active member of,
+        # so cross-project children are allowed but cross-tenant / unauthorised
+        # re-parenting is not.
+        sub_issues = (
+            Issue.issue_objects.filter(
+                id__in=sub_issue_ids,
+                workspace__slug=slug,
+                project__archived_at__isnull=True,
+                project__project_projectmember__member=request.user,
+                project__project_projectmember__is_active=True,
+            )
+            .exclude(pk=parent_issue.id)
+            .distinct()
         )
 
         for sub_issue in sub_issues:
@@ -243,9 +258,10 @@ class SubIssuesEndpoint(BaseAPIView):
         # does an unscoped Issue.objects.get and bumps updated_at on a foreign issue.
         scoped_sub_issue_ids = [str(sub_issue.id) for sub_issue in sub_issues]
 
-        updated_sub_issues = Issue.issue_objects.filter(
-            id__in=scoped_sub_issue_ids, workspace__slug=slug, project_id=project_id
-        ).annotate(state_group=F("state__group"))
+        updated_sub_issues = Issue.issue_objects.filter(id__in=scoped_sub_issue_ids, workspace__slug=slug).annotate(
+            state_group=F("state__group")
+        )
+        sub_issue_project_ids = {str(sub_issue.id): str(sub_issue.project_id) for sub_issue in sub_issues}
 
         # Track the issue
         _ = [
@@ -254,7 +270,7 @@ class SubIssuesEndpoint(BaseAPIView):
                 requested_data=json.dumps({"parent": str(issue_id)}),
                 actor_id=str(request.user.id),
                 issue_id=sub_issue_id,
-                project_id=str(project_id),
+                project_id=sub_issue_project_ids.get(sub_issue_id, str(project_id)),
                 current_instance=json.dumps({"parent": sub_issue_id}),
                 epoch=int(timezone.now().timestamp()),
                 notification=True,

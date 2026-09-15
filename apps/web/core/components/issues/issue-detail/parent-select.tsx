@@ -28,7 +28,7 @@ type TIssueParentSelect = {
   issueId: string;
   projectId: string;
   workspaceSlug: string;
-  handleParentIssue: (_issueId?: string | null) => Promise<void>;
+  handleParentIssue: (_issueId?: string | null, _parentProjectId?: string | null) => Promise<void>;
   handleRemoveSubIssue: (
     workspaceSlug: string,
     projectId: string,
@@ -73,7 +73,7 @@ export const IssueParentSelect = observer(function IssueParentSelect(props: TIss
         issueId={issueId}
         isOpen={isParentIssueModalOpen === issueId}
         handleClose={() => toggleParentIssueModal(null)}
-        onChange={(issue: any) => handleParentIssue(issue?.id)}
+        onChange={(issue: any) => handleParentIssue(issue?.id, issue?.project_id)}
       />
       <button
         type="button"

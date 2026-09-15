@@ -131,7 +131,7 @@ export const SubIssuesListItem = observer(function SubIssuesListItem(props: Prop
                         e.stopPropagation();
                         if (!subIssueHelpers.issue_visibility.includes(issueId)) {
                           setSubIssueHelpers(parentIssueId, "preview_loader", issueId);
-                          await fetchSubIssues(workspaceSlug, projectId, issueId);
+                          await fetchSubIssues(workspaceSlug, issue.project_id ?? projectId, issueId);
                           setSubIssueHelpers(parentIssueId, "preview_loader", issueId);
                         }
                         setSubIssueHelpers(parentIssueId, "issue_visibility", issueId);

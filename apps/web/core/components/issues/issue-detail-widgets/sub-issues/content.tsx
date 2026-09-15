@@ -140,7 +140,7 @@ export const SubIssuesCollapsibleContent = observer(function SubIssuesCollapsibl
           onSubmit={async () =>
             await subIssueOperations.deleteSubIssue(
               workspaceSlug,
-              projectId,
+              issueCrudState?.delete?.issue?.project_id ?? projectId,
               issueCrudState?.delete?.parentIssueId as string,
               issueCrudState?.delete?.issue?.id as string
             )
@@ -160,7 +160,7 @@ export const SubIssuesCollapsibleContent = observer(function SubIssuesCollapsibl
           onSubmit={async (_issue: TIssue) => {
             await subIssueOperations.updateSubIssue(
               workspaceSlug,
-              projectId,
+              _issue.project_id ?? projectId,
               parentIssueId,
               _issue.id,
               _issue,
