@@ -206,6 +206,7 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
         display_filters: {
           // states are per project, so group across the workspace by state group instead
           group_by: ["state_detail.group", "priority", "project", "labels", "assignees", "created_by"],
+          sub_group_by: ["state_detail.group", "priority", "project", "labels", "assignees", "created_by", null],
           order_by: ["sort_order", "-created_at", "-updated_at", "start_date", "-priority"],
           type: ["active", "backlog"],
         },
