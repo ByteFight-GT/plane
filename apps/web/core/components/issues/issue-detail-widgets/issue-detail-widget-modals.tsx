@@ -169,7 +169,6 @@ export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals
           data={createUpdateModalData}
           onClose={handleCreateUpdateModalClose}
           onSubmit={handleCreateUpdateModalOnSubmit}
-          isProjectSelectionDisabled
         />
       )}
 
@@ -181,6 +180,7 @@ export const IssueDetailWidgetModals = observer(function IssueDetailWidgetModals
           handleClose={handleExistingIssuesModalClose}
           searchParams={existingIssuesModalSearchParams}
           handleOnSubmit={handleExistingIssuesModalOnSubmit}
+          workspaceLevelToggle
         />
       )}
 

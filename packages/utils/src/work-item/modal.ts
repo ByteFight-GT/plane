@@ -17,6 +17,8 @@ export const getUpdateFormDataForReset = (projectId: string | null | undefined, 
   priority: formData.priority,
   start_date: formData.start_date,
   target_date: formData.target_date,
+  // a parent may live in another project, so keep it when the project changes
+  parent_id: formData.parent_id,
 });
 
 export const convertWorkItemDataToSearchResponse = (
