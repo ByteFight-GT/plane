@@ -7,7 +7,9 @@ import os
 from functools import wraps
 
 # Third party imports
-from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+from rest_framework.throttling import UserRateThrottle
+
+from plane.utils.throttling import ClientAnonRateThrottle
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -23,7 +25,7 @@ from plane.authentication.utils.host import base_host
 from plane.utils.path_validator import get_safe_redirect_url
 
 
-class AuthenticationThrottle(AnonRateThrottle):
+class AuthenticationThrottle(ClientAnonRateThrottle):
     # Rate is configurable per-deployment via the AUTHENTICATION_RATE_LIMIT
     # env var (DRF format: "<num>/<period>" where period is second/minute/hour/day).
     rate = os.environ.get("AUTHENTICATION_RATE_LIMIT", "10/minute")
