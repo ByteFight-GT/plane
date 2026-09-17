@@ -92,6 +92,9 @@ export const ISSUE_PRIORITIES: {
 
 export const DRAG_ALLOWED_GROUPS: TIssueGroupByOptions[] = [
   "state",
+  // workspace-level boards group by state group; a drop maps to the matching
+  // state in the card's own project (see useGroupIssuesDragNDrop)
+  "state_detail.group",
   "priority",
   "assignees",
   "labels",
