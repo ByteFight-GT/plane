@@ -9,11 +9,14 @@
 :3000 {
 	root * /usr/share/caddy/html
 
-	# Per-client-IP rate limiting for static asset requests
+	# Per-client-IP rate limiting for static asset requests.
+	# A single page load fetches well over a hundred asset chunks, and many users
+	# often share one egress address (campus / office NAT, CDN tunnels), so the
+	# default is generous. Override with STATIC_RATE_LIMIT_EVENTS (per minute).
 	rate_limit {
 		zone static {
 			key {client_ip}
-			events 300
+			events {$STATIC_RATE_LIMIT_EVENTS:6000}
 			window 1m
 		}
 	}

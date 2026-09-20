@@ -7,6 +7,9 @@ services:
       args:
         DOCKER_BUILDKIT: 1
     restart: always
+    environment:
+      # static-asset rate limit per client IP per minute (see apps/web/caddy/Caddyfile)
+      STATIC_RATE_LIMIT_EVENTS: ${STATIC_RATE_LIMIT_EVENTS:-6000}
     depends_on:
       - api
 
@@ -18,6 +21,9 @@ services:
       args:
         DOCKER_BUILDKIT: 1
     restart: always
+    environment:
+      # static-asset rate limit per client IP per minute (see apps/admin/caddy/Caddyfile)
+      STATIC_RATE_LIMIT_EVENTS: ${STATIC_RATE_LIMIT_EVENTS:-6000}
     depends_on:
       - api
       - web
