@@ -212,7 +212,10 @@ export const ISSUE_DISPLAY_FILTERS_BY_PAGE: TIssueFiltersToDisplayByPageType = {
         },
         extra_options: {
           access: true,
-          values: ["show_empty_groups"],
+          // sub_issue must be sent to the API: the store only re-adds a sub-work item
+          // to its group after an update when this flag is on, so the server and
+          // the client have to agree on whether sub-work items are listed.
+          values: ["show_empty_groups", "sub_issue"],
         },
       },
     },

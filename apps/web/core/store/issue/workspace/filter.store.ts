@@ -165,6 +165,8 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
       layout: EIssueLayoutTypes.SPREADSHEET,
       order_by: "-created_at",
     });
+    // show sub-work items by default on workspace views unless explicitly turned off
+    if (_filters?.display_filters?.sub_issue === undefined) displayFilters.sub_issue = true;
     displayProperties = this.computedDisplayProperties(_filters?.display_properties);
     kanbanFilters = {
       group_by: _filters?.kanban_filters?.group_by || [],
@@ -179,6 +181,7 @@ export class WorkspaceIssuesFilter extends IssueFilterHelperStore implements IWo
         layout: EIssueLayoutTypes.SPREADSHEET,
         order_by: "-created_at",
       });
+      if (_filters?.display_filters?.sub_issue === undefined) displayFilters.sub_issue = true;
       displayProperties = this.computedDisplayProperties(_filters?.display_properties);
     }
 
